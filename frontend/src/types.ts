@@ -6,3 +6,12 @@ export type LinkMenuType = {
   name: string;
   icon: JSX.Element;
 };
+
+export interface RoutesItem {
+  label: string;
+  path: string;
+  element: JSX.Element;
+  icon?: JSX.Element;
+  guard: boolean;
+  menu: boolean;
+}

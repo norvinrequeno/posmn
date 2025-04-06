@@ -1,19 +1,16 @@
 import { useState } from "react";
 import useAuth from "../auth/useAuth";
 import { LinkMenuType } from "../types";
-import { ChevronLeft, LayoutDashboard, LogOut, MenuIcon } from "lucide-react";
+import { ChevronLeft, LogOut, MenuIcon } from "lucide-react";
 import { Link } from "react-router-dom";
+import { MenuItems } from "../routes";
 
 export default function Menu() {
   const [open, setOpen] = useState(true);
   const { name, logout } = useAuth();
 
   const links: LinkMenuType[] = [
-    {
-      name: "Dashboard",
-      to: "/dashboard",
-      icon: <LayoutDashboard size={20} />,
-    },
+    ...MenuItems,
     {
       name: "Cerrar sesión",
       click: logout,

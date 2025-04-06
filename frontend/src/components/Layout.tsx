@@ -14,7 +14,7 @@ export default function Layout({
         <header className="bg-white px-4 py-3 flex items-center justify-between">
           <div className="text-xl font-semibold text-gray-800">{title}</div>
         </header>
-        <main className="flex-1 overflow-y-auto p-10 min-h-95 bg-gray-100 rounded-4xl">
+        <main className="flex-1 overflow-y-auto p-7 min-h-95 bg-gray-200 rounded-4xl">
           {children}
         </main>
       </div>
