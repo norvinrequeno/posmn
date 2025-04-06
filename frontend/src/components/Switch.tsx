@@ -17,12 +17,12 @@ const Switch = () => {
       />
       <label htmlFor="switch" className="mr-2 text-gray-700">
         <div
-          className={`toggle-label w-12 h-6 rounded-full cursor-pointer flex items-center transition-all ease-in-out duration-300 ${
-            isChecked ? "bg-green-500" : "bg-gray-300 border-2 border-slate-200"
+          className={`toggle-label w-10 h-4 rounded-full cursor-pointer flex items-center transition-all ease-in-out duration-300 ${
+            isChecked ? "bg-green-600" : "bg-gray-300 border-2 border-slate-200"
           }`}
         >
           <div
-            className={`toggle-circle w-6 h-6 bg-white rounded-full transition-transform transform ${
+            className={`toggle-circle w-4 h-4 bg-white rounded-full transition-transform transform ${
               isChecked ? "translate-x-6" : ""
             }`}
           ></div>

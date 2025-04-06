@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Pencil, Plus, TrashIcon } from "lucide-react";
 import Layout from "../../components/Layout";
 import Switch from "../../components/Switch";
 
@@ -11,7 +11,7 @@ export default function CategoriasPage() {
         </div>
         <div className="flex mb-4">
           <div className="w-2/12">
-            <button className="flex gap-2 bg-amber-700 text-white px-4 py-2 rounded hover:bg-amber-900 transition ease-in-out duration-300 cursor-pointer">
+            <button className="flex gap-2 bg-amber-800 text-white px-4 py-2 rounded hover:bg-amber-900 transition ease-in-out duration-300 cursor-pointer">
               <Plus size={20} />
               Agregar
             </button>
@@ -27,10 +27,10 @@ export default function CategoriasPage() {
           <table className="min-w-full table-auto">
             <thead>
               <tr className="bg-slate-900">
-                <th className="px-4 py-2 text-left font-semibold text-slate-50">
+                <th className="px-4 py-2 text-left font-semibold text-slate-50 w-1/12">
                   Acciones
                 </th>
-                <th className="px-4 py-2 text-left font-semibold text-slate-50">
+                <th className="px-4 py-2 text-left font-semibold text-slate-50 w-1/12">
                   Estado
                 </th>
                 <th className="px-4 py-2 text-left font-semibold text-slate-50">
@@ -41,41 +41,17 @@ export default function CategoriasPage() {
             <tbody>
               <tr className=" hover:bg-gray-50">
                 <td className="px-4 py-2">
-                  <button className="text-blue-600 hover:text-blue-800">
-                    Editar
+                  <button className="text-slate-600 hover:text-blue-800">
+                    <Pencil size={18} absoluteStrokeWidth />
                   </button>
                   <button className="text-red-600 hover:text-red-800 ml-2">
-                    Eliminar
+                    <TrashIcon size={18} absoluteStrokeWidth />
                   </button>
                 </td>
                 <td className="px-4 py-2">
                   <Switch />
                 </td>
                 <td className="px-4 py-2">Tecnología</td>
-              </tr>
-              <tr className="hover:bg-gray-50">
-                <td className="px-4 py-2">
-                  <button className="text-blue-600 hover:text-blue-800">
-                    Editar
-                  </button>
-                  <button className="text-red-600 hover:text-red-800 ml-2">
-                    Eliminar
-                  </button>
-                </td>
-                <td className="px-4 py-2">Inactivo</td>
-                <td className="px-4 py-2">Salud</td>
-              </tr>
-              <tr className="hover:bg-gray-50">
-                <td className="px-4 py-2">
-                  <button className="text-blue-600 hover:text-blue-800">
-                    Editar
-                  </button>
-                  <button className="text-red-600 hover:text-red-800 ml-2">
-                    Eliminar
-                  </button>
-                </td>
-                <td className="px-4 py-2">Pendiente</td>
-                <td className="px-4 py-2">Educación</td>
               </tr>
             </tbody>
           </table>
