@@ -1,5 +1,5 @@
 import { JSX } from "react";
-
+//cSpell:ignore categorias categoria
 export type LinkMenuType = {
   to?: string;
   click?: () => void;
@@ -15,3 +15,10 @@ export interface RoutesItem {
   guard: boolean;
   menu: boolean;
 }
+
+export type AlertType = "success" | "error" | "warning" | "info";
+export type Categorias = {
+  id: number;
+  categoria: string;
+  estado: boolean;
+};

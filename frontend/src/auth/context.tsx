@@ -5,6 +5,8 @@ interface AuthContexType {
   token: string;
   login: (email: string, password: string) => void;
   logout: () => void;
+  changeMenu: () => void;
+  menu: boolean;
 }
 
 export const AuthContext = createContext<AuthContexType>({
@@ -15,4 +17,6 @@ export const AuthContext = createContext<AuthContexType>({
     localStorage.removeItem("token");
   },
   logout: () => {},
+  changeMenu: () => {},
+  menu: false,
 });

@@ -1,7 +1,7 @@
 import { LinkMenuType, RoutesItem } from "./types";
 import CategoriasPage from "./pages/categorias/CategoriasPage";
 import DashboardPage from "./pages/DashboardPage";
-import { LayoutDashboard, Plus } from "lucide-react";
+import { CalendarHeart, LayoutDashboard, Plus } from "lucide-react";
 //cSpell:ignore categorias
 export const routesApp: RoutesItem[] = [
   {
@@ -23,7 +23,7 @@ export const routesApp: RoutesItem[] = [
     label: "Categorias",
     path: "/categorias",
     element: <CategoriasPage />,
-    icon: <LayoutDashboard size={20} />,
+    icon: <CalendarHeart size={20} />,
     guard: true,
     menu: true,
   },

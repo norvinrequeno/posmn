@@ -9,6 +9,7 @@ export default function AuthProvider({
   children: React.ReactNode;
 }) {
   const [name, setName] = useState("");
+  const [menu, setMenu] = useState(false);
   const [token, setToken] = useState("");
   const navigate = useNavigate();
 
@@ -59,8 +60,13 @@ export default function AuthProvider({
     getUser();
   });
 
+  const changeMenu = () => {
+    setMenu(!menu);
+  };
   return (
-    <AuthContext.Provider value={{ name, token, login, logout }}>
+    <AuthContext.Provider
+      value={{ name, token, login, logout, menu, changeMenu }}
+    >
       {children}
     </AuthContext.Provider>
   );
