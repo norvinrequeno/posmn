@@ -22,3 +22,11 @@ export type Categorias = {
   categoria: string;
   estado: boolean;
 };
+
+export type Productos = {
+  id: number;
+  producto: string;
+  detalle: string;
+  estado: boolean;
+  categoria: Categorias;
+};

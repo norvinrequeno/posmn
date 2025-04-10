@@ -3,7 +3,7 @@ import { AlertType, Categorias } from "../../types";
 import { Save } from "lucide-react";
 import Alert from "../../components/Alert";
 import api from "../../api";
-
+//cSpell:ignore categorias categoria
 interface CategoriaFormProps {
   categoria?: Categorias;
   setUpdate: (categoria: Categorias) => void;

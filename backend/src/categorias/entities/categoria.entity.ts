@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Producto } from 'src/productos/entities/producto.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+//cSpell:ignore categorias categoria
 @Entity('categorias')
 export class Categoria {
   @PrimaryGeneratedColumn()
@@ -10,4 +11,7 @@ export class Categoria {
 
   @Column({ default: true })
   estado: boolean;
+
+  @OneToMany(() => Producto, (producto) => producto.categoria)
+  productos: Producto[];
 }
