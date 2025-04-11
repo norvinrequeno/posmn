@@ -30,3 +30,11 @@ export type Productos = {
   estado: boolean;
   categoria: Categorias;
 };
+
+export type Precios = {
+  id: number;
+  precio: number;
+  detalle: string;
+  estado: boolean;
+  producto: Productos;
+};

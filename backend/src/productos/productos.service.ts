@@ -71,6 +71,14 @@ export class ProductosService {
     return this.productoRepository.save(producto);
   }
 
+  async changeEstado(id: number): Promise<Producto | undefined> {
+    const producto = await this.findOne(id);
+    if (!producto) {
+      throw new Error('No se encontró el registro');
+    }
+    producto.estado = !producto.estado;
+    return this.productoRepository.save(producto);
+  }
   async remove(id: number) {
     const producto = await this.findOne(id);
     return this.productoRepository.remove(producto);

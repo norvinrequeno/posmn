@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { UpdateCategoriaDto } from './dto/update-categoria.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -19,6 +19,18 @@ export class CategoriasService {
   async findAll(): Promise<Categoria[]> {
     return this.categoriaRepository.find();
   }
+  async findActive(): Promise<Categoria[]> {
+    try {
+      return await this.categoriaRepository.find({
+        where: { estado: true },
+      });
+    } catch (error) {
+      console.error('Error en findActive:', error);
+      throw new InternalServerErrorException(
+        'Error al buscar categorías activas',
+      );
+    }
+  }
 
   async findOne(id: number): Promise<Categoria | null> {
     return this.categoriaRepository.findOne({ where: { id } });
@@ -35,6 +47,15 @@ export class CategoriasService {
     if (!categoria) {
       throw new Error('No se encontró el registro');
     }
+    return this.categoriaRepository.save(categoria);
+  }
+
+  async changeEstado(id: number): Promise<Categoria | undefined> {
+    const categoria = await this.findOne(id);
+    if (!categoria) {
+      throw new Error('No se encontró el registro');
+    }
+    categoria.estado = !categoria.estado;
     return this.categoriaRepository.save(categoria);
   }
 

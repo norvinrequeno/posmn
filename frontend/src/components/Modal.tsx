@@ -43,13 +43,13 @@ export default function Modal({
             animate={{ opacity: 0.65 }}
             exit={{ opacity: 0 }}
           />
-          <div className="fixed inset-0 z-50 flex  items-end md:items-center justify-center">
+          <div className="fixed inset-0 z-50 flex  items-end md:items-center justify-center ">
             <motion.div
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className={`bg-white w-full md:rounded-xl md:mx-4 md:my-8 ${sizeClasses[size]} shadow-lg`}
+              className={`bg-white w-full md:rounded-xl md:mx-4 md:my-8 ${sizeClasses[size]} shadow-lg max-h-full overflow-y-auto`}
             >
               <div className="p-4 border-b border-gray-200 flex justify-between items-center">
                 {title && <h2 className="text-lg font-semibold">{title}</h2>}

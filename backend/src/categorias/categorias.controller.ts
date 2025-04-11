@@ -27,6 +27,10 @@ export class CategoriasController {
   findAll() {
     return this.categoriasService.findAll();
   }
+  @Get('active')
+  findActive() {
+    return this.categoriasService.findActive();
+  }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -39,6 +43,11 @@ export class CategoriasController {
     @Body() updateCategoriaDto: UpdateCategoriaDto,
   ) {
     return this.categoriasService.update(+id, updateCategoriaDto);
+  }
+
+  @Patch('estado/:id')
+  estado(@Param('id') id: string) {
+    return this.categoriasService.changeEstado(+id);
   }
 
   @Delete(':id')

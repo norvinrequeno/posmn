@@ -3,11 +3,13 @@ import { AlertType, Productos } from "../../types";
 import api from "../../api";
 import Spinner from "../../components/Spinner";
 import Layout from "../../components/Layout";
-import { Pencil, Plus, TrashIcon } from "lucide-react";
+import { DollarSign, Pencil, Plus, TrashIcon } from "lucide-react";
 import Alert from "../../components/Alert";
 import Switch from "../../components/Switch";
 import Modal from "../../components/Modal";
 import ProductosForm from "./ProductosForm";
+
+import PreciosList from "../precios/PreciosList";
 //cSpell:ignore categorias categoria
 export default function ProductosPage() {
   const [list, setList] = useState<Productos[]>([]);
@@ -16,6 +18,7 @@ export default function ProductosPage() {
   const [alertType, setAlertType] = useState<AlertType>("info");
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const [preciosModal, setPreciosModal] = useState(false);
   const [search, setSearch] = useState("");
   const [uProducto, setUProducto] = useState<Productos>();
   const getList = async () => {
@@ -83,6 +86,24 @@ export default function ProductosPage() {
     }
   };
 
+  const showPrecios = (producto: Productos) => {
+    setUProducto(producto);
+    setPreciosModal(true);
+  };
+
+  const changeStatus = async (id: number): Promise<boolean | null> => {
+    try {
+      const { data, status } = await api.patch(`productos/estado/${id}`);
+      if (status == 200 && data) {
+        setMessage("Se cambio el estado con éxito");
+        setAlertType("info");
+        return data?.estado ?? null;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    return null;
+  };
   useEffect(() => {
     getList();
   }, []);
@@ -123,7 +144,7 @@ export default function ProductosPage() {
             <table className="min-w-full table-auto">
               <thead>
                 <tr className="bg-slate-900">
-                  <th className="px-4 py-2 text-left font-semibold text-slate-50 w-1/12">
+                  <th className="px-4 py-2 text-left font-semibold text-slate-50 w-2/12">
                     Acciones
                   </th>
                   <th className="px-4 py-2 text-left font-semibold text-slate-50 w-1/12">
@@ -142,20 +163,33 @@ export default function ProductosPage() {
                   <tr className=" hover:bg-gray-50" key={m.id}>
                     <td className="px-4 py-2">
                       <button
-                        className="text-slate-600 hover:text-blue-800"
+                        className="text-slate-700 rounded-lg mx-1 px-2 py-2 bg-stone-100 hover:bg-slate-700 hover:text-white"
+                        onClick={() => showPrecios(m)}
+                        title="Configurar precios"
+                      >
+                        <DollarSign size={18} absoluteStrokeWidth />
+                      </button>
+                      <button
+                        className="text-slate-700 rounded-lg mx-1 px-2 py-2 bg-stone-100 hover:bg-slate-700 hover:text-white"
                         onClick={() => setEdit(m)}
+                        title="Editar"
                       >
                         <Pencil size={18} absoluteStrokeWidth />
                       </button>
                       <button
-                        className="text-red-600 hover:text-red-800 ml-2"
+                        className="text-red-800 rounded-lg mx-1 px-2 py-2 bg-stone-100 hover:bg-red-800 hover:text-white"
                         onClick={() => destroy(m)}
+                        title="Eliminar de forma permanente"
                       >
                         <TrashIcon size={18} absoluteStrokeWidth />
                       </button>
                     </td>
                     <td className="px-4 py-2">
-                      <Switch status={m.estado} id={m.id} />
+                      <Switch
+                        status={m.estado}
+                        id={m.id}
+                        changeStatus={changeStatus}
+                      />
                     </td>
                     <td className="px-4 py-2">{m.producto}</td>
                     <td className="px-4 py-2">{m.categoria.categoria}</td>
@@ -174,14 +208,27 @@ export default function ProductosPage() {
       >
         <ProductosForm setUpdate={setUpdate} />
       </Modal>
-      <Modal
-        isOpen={editModal}
-        setIsOpen={setEditModal}
-        title={`Editar categoría: ${uProducto?.producto}`}
-        size="md"
-      >
-        <ProductosForm setUpdate={setUpdate} producto={uProducto} />
-      </Modal>
+      {uProducto && (
+        <Modal
+          isOpen={editModal}
+          setIsOpen={setEditModal}
+          title={`Editar categoría: ${uProducto?.producto}`}
+          size="md"
+        >
+          <ProductosForm setUpdate={setUpdate} producto={uProducto} />
+        </Modal>
+      )}
+
+      {uProducto && (
+        <Modal
+          isOpen={preciosModal}
+          setIsOpen={setPreciosModal}
+          title={`Configurar precios de: ${uProducto?.producto}`}
+          size="lg"
+        >
+          <PreciosList id={uProducto.id} />
+        </Modal>
+      )}
     </Layout>
   );
 }

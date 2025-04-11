@@ -1,5 +1,12 @@
 import { Categoria } from 'src/categorias/entities/categoria.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Precio } from 'src/precios/entities/precio.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 //cSpell:ignore categorias categoria
 @Entity('productos')
 export class Producto {
@@ -20,4 +27,7 @@ export class Producto {
     eager: true,
   })
   categoria: Categoria;
+
+  @OneToMany(() => Precio, (precio) => precio.producto)
+  precios: Precio;
 }

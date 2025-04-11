@@ -23,7 +23,8 @@ export default function ProductosForm({
 
   const getCategorias = async () => {
     try {
-      const { data, status } = await api.get("categorias");
+      const { data, status } = await api.get("categorias/active");
+
       if (status === 200 && data) {
         setCategoriasList(data);
       } else {

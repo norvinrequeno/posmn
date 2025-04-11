@@ -72,6 +72,19 @@ export default function CategoriasPage() {
     }
   };
 
+  const changeStatus = async (id: number): Promise<boolean | null> => {
+    try {
+      const { data, status } = await api.patch(`categorias/estado/${id}`);
+      if (status == 200 && data) {
+        setMessage("Se cambio el estado con éxito");
+        setTypeAlert("info");
+        return data?.estado ?? null;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    return null;
+  };
   const getSearch = (): Categorias[] => {
     if (search === "" || search.length === 0) {
       return list;
@@ -119,7 +132,7 @@ export default function CategoriasPage() {
             <table className="min-w-full table-auto">
               <thead>
                 <tr className="bg-slate-900">
-                  <th className="px-4 py-2 text-left font-semibold text-slate-50 w-1/12">
+                  <th className="px-4 py-2 text-left font-semibold text-slate-50 w-2/12">
                     Acciones
                   </th>
                   <th className="px-4 py-2 text-left font-semibold text-slate-50 w-1/12">
@@ -135,20 +148,24 @@ export default function CategoriasPage() {
                   <tr className=" hover:bg-gray-50" key={m.id}>
                     <td className="px-4 py-2">
                       <button
-                        className="text-slate-600 hover:text-blue-800"
+                        className="text-slate-700 rounded-lg mx-1 px-2 py-2 bg-stone-100 hover:bg-slate-700 hover:text-white"
                         onClick={() => setEdit(m)}
                       >
                         <Pencil size={18} absoluteStrokeWidth />
                       </button>
                       <button
-                        className="text-red-600 hover:text-red-800 ml-2"
+                        className="text-red-800 rounded-lg mx-1 px-2 py-2 bg-stone-100 hover:bg-red-800 hover:text-white"
                         onClick={() => destroy(m)}
                       >
                         <TrashIcon size={18} absoluteStrokeWidth />
                       </button>
                     </td>
                     <td className="px-4 py-2">
-                      <Switch status={m.estado} id={m.id} />
+                      <Switch
+                        status={m.estado}
+                        id={m.id}
+                        changeStatus={changeStatus}
+                      />
                     </td>
                     <td className="px-4 py-2">{m.categoria}</td>
                   </tr>
