@@ -203,7 +203,7 @@ export default function ProductosPage() {
       <Modal
         isOpen={addModal}
         setIsOpen={setAddModal}
-        title="Agregar una categoría"
+        title="Agregar producto"
         size="md"
       >
         <ProductosForm setUpdate={setUpdate} />
@@ -212,7 +212,7 @@ export default function ProductosPage() {
         <Modal
           isOpen={editModal}
           setIsOpen={setEditModal}
-          title={`Editar categoría: ${uProducto?.producto}`}
+          title={`Editar producto: ${uProducto?.producto}`}
           size="md"
         >
           <ProductosForm setUpdate={setUpdate} producto={uProducto} />

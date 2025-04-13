@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Precio } from './entities/precio.entity';
 import { Repository } from 'typeorm';
 import { Producto } from 'src/productos/entities/producto.entity';
-
+//cSpell:ignore categoria
 @Injectable()
 export class PreciosService {
   constructor(
@@ -47,6 +47,19 @@ export class PreciosService {
       where: {
         producto: { id },
       },
+    });
+  }
+
+  async findActive(): Promise<Precio[]> {
+    return await this.precioRepository.find({
+      where: {
+        producto: {
+          estado: true,
+          categoria: { estado: true },
+        },
+        estado: true,
+      },
+      order: { producto: { producto: 'ASC' } },
     });
   }
 

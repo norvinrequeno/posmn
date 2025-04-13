@@ -1,59 +1,32 @@
-import { ChevronDown, X } from "lucide-react";
-import { useState } from "react";
+import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import AddItem from "./AddItem";
+import Spinner from "../../components/Spinner";
+import api from "../../api";
+import { Categorias, Precios } from "../../types";
 //cSpell:ignore categorias categoria
 export default function ProductosList() {
   const [showCat, setShowCat] = useState(false);
   const [selectedCats, setSelectedCats] = useState<number[]>([]);
   const [search, setSearch] = useState("");
-  const categorias = [
-    { id: 1, categoria: "Atoles" },
-    { id: 2, categoria: "Tacos" },
-    { id: 3, categoria: "Harinas" },
-  ];
+  const [loading, setLoading] = useState(true);
+  const [categorias, setCategorias] = useState<Categorias[]>([]);
+  const [precios, setPrecios] = useState<Precios[]>([]);
 
-  const productos = [
-    {
-      id: 1,
-      cantidad: 1,
-      producto: "Atol de semilla de marañón",
-      precio: 0.85,
-      categoria: 1,
-    },
-    {
-      id: 2,
-      cantidad: 1,
-      producto: "Harina para horchata",
-      precio: 6.0,
-      categoria: 3,
-    },
-    {
-      id: 4,
-      cantidad: 1,
-      producto: "Taco unidad",
-      precio: 1.2,
-      categoria: 2,
-    },
-    {
-      id: 5,
-      cantidad: 1,
-      producto: "Orden de tacos (3 unit.)",
-      precio: 2.5,
-      categoria: 2,
-    },
-  ];
   const pFilter = () => {
-    let filterProducto = productos;
+    let filterProducto = precios;
     if (selectedCats && selectedCats.length > 0)
       filterProducto = filterProducto.filter((p) =>
-        selectedCats.includes(p.categoria)
+        selectedCats.includes(p.producto.categoria.id)
       );
 
     if (search !== "") {
       const reg = new RegExp(search, "i");
-      filterProducto = filterProducto.filter((p) => reg.test(p.producto));
+      filterProducto = filterProducto.filter((p) =>
+        reg.test(p.producto.producto)
+      );
     }
-    return filterProducto;
+    return filterProducto ?? [];
   };
   const productosFilter = pFilter();
   const toggleCats = (id: number) => {
@@ -61,6 +34,24 @@ export default function ProductosList() {
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     );
   };
+
+  const getProductos = async () => {
+    try {
+      const { data, status } = await api.get("precios/get/productos");
+      if (status === 200 && data) {
+        setCategorias(data.categorias);
+        setPrecios(data.precios);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    getProductos();
+  }, []);
+  if (loading) return <Spinner />;
   return (
     <div className="flex flex-col">
       <div className="w-full flex gap-3 mb-5">
@@ -69,7 +60,8 @@ export default function ProductosList() {
             className="px-3 py-2 bg-slate-200 rounded-lg flex gap-1 items-center hover:bg-slate-300"
             onClick={() => setShowCat(!showCat)}
           >
-            Categorías <ChevronDown size={20} />
+            Categorías{" "}
+            {showCat ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
           </button>
           {showCat && (
             <div className="absolute w-60 z-index-40 mt-2 bg-neutral-100 rounded-lg shadow-lg transition duration-300">
@@ -94,21 +86,22 @@ export default function ProductosList() {
           )}
         </div>
 
-        {categorias
-          .filter((c) => selectedCats.includes(c.id))
-          .map((c) => (
-            <div
-              key={c.id}
-              className="text-sm text-gray-700 px-3 py-2 bg-slate-100 rounded-lg flex gap-1 items-center hover:bg-slate-200"
-            >
-              {c.categoria}{" "}
-              <X
-                size={18}
-                onClick={() => toggleCats(c.id)}
-                className="cursor-pointer"
-              />
-            </div>
-          ))}
+        {categorias.length > 0 &&
+          categorias
+            .filter((c) => selectedCats.includes(c.id))
+            .map((c) => (
+              <div
+                key={c.id}
+                className="text-sm text-gray-700 px-3 py-2 bg-slate-100 rounded-lg flex gap-1 items-center hover:bg-slate-200"
+              >
+                {c.categoria}{" "}
+                <X
+                  size={18}
+                  onClick={() => toggleCats(c.id)}
+                  className="cursor-pointer"
+                />
+              </div>
+            ))}
       </div>
       <div className="w-full mb-4">
         <input
@@ -120,9 +113,8 @@ export default function ProductosList() {
         />
       </div>
       <div className="w-full">
-        {productosFilter.map((p) => (
-          <AddItem item={p} />
-        ))}
+        {productosFilter.length > 0 &&
+          productosFilter.map((p) => <AddItem item={p} key={p.id} />)}
       </div>
     </div>
   );

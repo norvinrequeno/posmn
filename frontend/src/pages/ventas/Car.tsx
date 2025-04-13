@@ -9,8 +9,9 @@ export default function Car() {
       precio: 1.15,
       producto: "Arroz con leche y canela",
       ventas_id: 1,
+      id: 1,
     },
-    { cantidad: 4, precio: 2.5, producto: "Tacos", ventas_id: 1 },
+    { cantidad: 4, precio: 2.5, producto: "Tacos", ventas_id: 1, id: 2 },
   ];
   const formas = [
     { id: 1, forma: "Efectivo" },
@@ -22,7 +23,7 @@ export default function Car() {
         <ShoppingBag size={20} /> Venta
       </div>
       <div className="mb-6">
-        {list && list.map((l) => <CarItem item={l} />)}
+        {list && list.map((l) => <CarItem item={l} key={l.id} />)}
       </div>
       <div className="flex justify-between border-t-2 border-slate-200 pt-4 mb-4">
         <div className="font-light">Total:</div>
@@ -34,8 +35,8 @@ export default function Car() {
         </div>
         {formas &&
           formas.map((f) => (
-            <div className="mb-2">
-              <FormasPagos label={f.forma} key={f.id} />
+            <div className="mb-2" key={f.id}>
+              <FormasPagos label={f.forma} />
             </div>
           ))}
       </div>

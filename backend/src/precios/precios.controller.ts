@@ -12,11 +12,15 @@ import { PreciosService } from './precios.service';
 import { CreatePrecioDto } from './dto/create-precio.dto';
 import { UpdatePrecioDto } from './dto/update-precio.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
-
+import { CategoriasService } from 'src/categorias/categorias.service';
+//cSpell:ignore categorias, categoria
 @Controller('precios')
 @UseGuards(AuthGuard)
 export class PreciosController {
-  constructor(private readonly preciosService: PreciosService) {}
+  constructor(
+    private readonly preciosService: PreciosService,
+    private readonly categoriasService: CategoriasService,
+  ) {}
 
   @Post()
   create(@Body() createPrecioDto: CreatePrecioDto) {
@@ -27,7 +31,15 @@ export class PreciosController {
   findAll() {
     return this.preciosService.findAll();
   }
-
+  @Get('get/productos')
+  async getProducto() {
+    const precios = await this.preciosService.findActive();
+    const categorias = await this.categoriasService.findActive();
+    return {
+      precios,
+      categorias,
+    };
+  }
   @Get('productos/:id')
   findByProducto(@Param('id') id: string) {
     return this.preciosService.findByProducto(+id);

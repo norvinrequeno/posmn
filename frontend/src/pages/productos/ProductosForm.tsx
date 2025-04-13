@@ -14,9 +14,7 @@ export default function ProductosForm({
 }: ProductosFormProps) {
   const [name, setName] = useState(producto?.producto || "");
   const [detalle, setDetalle] = useState(producto?.detalle || "");
-  const [categoriasId, setCategoriasId] = useState(
-    producto?.categoria.id || ""
-  );
+  const [categoriasId, setCategoriasId] = useState(producto?.categoria.id || 0);
   const [categoriasList, setCategoriasList] = useState<Categorias[]>([]);
   const [message, setMessage] = useState("");
   const [typeAlert, setTypeAlert] = useState<AlertType>("info");
@@ -49,7 +47,7 @@ export default function ProductosForm({
       return;
     }
 
-    if (categoriasId === "" || categoriasId == null) {
+    if (categoriasId === 0 || categoriasId == null) {
       setMessage("Debe seleccionar una categoria");
       setTypeAlert("warning");
       return;
@@ -60,6 +58,8 @@ export default function ProductosForm({
   };
   const create = async () => {
     try {
+      console.log(name, detalle, categoriasId);
+
       const { data, status } = await api.post("productos", {
         producto: name,
         detalle: detalle,
@@ -71,7 +71,7 @@ export default function ProductosForm({
         setUpdate(data);
         setName("");
         setDetalle("");
-        setCategoriasId("");
+        setCategoriasId(0);
       } else {
         setMessage("Ocurrió un error al intentar guardar los cambios");
         setTypeAlert("error");
@@ -142,7 +142,7 @@ export default function ProductosForm({
           Categoria
         </label>
         <select
-          onChange={(e) => setCategoriasId(e.target.value)}
+          onChange={(e) => setCategoriasId(parseInt(e.target.value))}
           value={categoriasId}
           className="mt-2 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         >

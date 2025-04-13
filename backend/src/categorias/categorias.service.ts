@@ -23,6 +23,7 @@ export class CategoriasService {
     try {
       return await this.categoriaRepository.find({
         where: { estado: true },
+        order: { categoria: 'ASC' },
       });
     } catch (error) {
       console.error('Error en findActive:', error);
