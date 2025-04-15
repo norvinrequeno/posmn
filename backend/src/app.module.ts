@@ -7,6 +7,8 @@ import { CategoriasModule } from './categorias/categorias.module';
 import { FormasPagosModule } from './formas_pagos/formas_pagos.module';
 import { ProductosModule } from './productos/productos.module';
 import { PreciosModule } from './precios/precios.module';
+import { VentasModule } from './ventas/ventas.module';
+import { VentasDetallesModule } from './ventas_detalles/ventas_detalles.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { PreciosModule } from './precios/precios.module';
     FormasPagosModule,
     ProductosModule,
     PreciosModule,
+    VentasModule,
+    VentasDetallesModule,
   ],
   controllers: [],
   providers: [],

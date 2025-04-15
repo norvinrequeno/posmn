@@ -1,5 +1,12 @@
 import { Producto } from 'src/productos/entities/producto.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { VentasDetalle } from 'src/ventas_detalles/entities/ventas_detalle.entity';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('precios')
 export class Precio {
@@ -17,4 +24,7 @@ export class Precio {
     onDelete: 'CASCADE',
   })
   producto: Producto;
+
+  @OneToMany(() => VentasDetalle, (v) => v.precio)
+  detalle_ventas: VentasDetalle[];
 }
