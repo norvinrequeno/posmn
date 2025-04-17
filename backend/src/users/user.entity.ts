@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Venta } from 'src/ventas/entities/venta.entity';
 import { VentasDetalle } from 'src/ventas_detalles/entities/ventas_detalle.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
@@ -13,6 +14,7 @@ export class User {
   @Column()
   name: string;
 
+  @Exclude()
   @Column()
   password: string;
 

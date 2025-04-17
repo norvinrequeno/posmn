@@ -1,12 +1,15 @@
 import useAuth from "../auth/useAuth";
 import { LinkMenuType } from "../types";
-import { ChevronLeft, LogOut, MenuIcon } from "lucide-react";
+import { ChevronLeft, LogOut, MenuIcon, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MenuItems } from "../routes";
+import { useState } from "react";
+import Modal from "./Modal";
+import NuevaVentaForm from "../pages/ventas/NuevaVentaForm";
 
 export default function Menu() {
   const { name, logout, menu, changeMenu } = useAuth();
-
+  const [ventaModal, setVentaModal] = useState(false);
   const links: LinkMenuType[] = [
     ...MenuItems,
     {
@@ -33,6 +36,15 @@ export default function Menu() {
           </div>
 
           <nav className="space-y-1 mt-2">
+            <button
+              onClick={() => setVentaModal(!ventaModal)}
+              className="flex items-center space-x-3 px-4 py-2 text-gray-700 hover:bg-amber-900 hover:text-white rounded w-full text-left"
+            >
+              <span>
+                <Plus />
+              </span>
+              {menu && <span>Nueva venta</span>}
+            </button>
             {links.map((link: LinkMenuType, index) => {
               if (link.to) {
                 return (
@@ -65,6 +77,9 @@ export default function Menu() {
           </nav>
         </div>
       </div>
+      <Modal setIsOpen={setVentaModal} isOpen={ventaModal}>
+        <NuevaVentaForm />
+      </Modal>
     </aside>
   );
 }

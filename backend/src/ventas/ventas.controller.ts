@@ -7,17 +7,24 @@ import {
   Param,
   Delete,
   UseGuards,
+  Inject,
+  forwardRef,
 } from '@nestjs/common';
 import { VentasService } from './ventas.service';
 import { CreateVentaDto } from './dto/create-venta.dto';
 import { UpdateVentaDto } from './dto/update-venta.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { UserId } from 'src/auth/user.decorator';
+import { VentasDetallesService } from 'src/ventas_detalles/ventas_detalles.service';
 
 @UseGuards(AuthGuard)
 @Controller('ventas')
 export class VentasController {
-  constructor(private readonly ventasService: VentasService) {}
+  constructor(
+    private readonly ventasService: VentasService,
+    @Inject(forwardRef(() => VentasDetallesService))
+    private readonly detalleService: VentasDetallesService,
+  ) {}
 
   @Post()
   create(@Body() dto: CreateVentaDto, @UserId() id: number) {
@@ -39,8 +46,11 @@ export class VentasController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ventasService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    const venta = await this.ventasService.findOne(+id);
+    if (!venta) return [];
+    const detalle = await this.detalleService.findByVenta(venta.id);
+    return { venta, detalle };
   }
 
   @Patch(':id')

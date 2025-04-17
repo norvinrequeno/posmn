@@ -38,3 +38,28 @@ export type Precios = {
   estado: boolean;
   producto: Productos;
 };
+export type User = {
+  name: string;
+  id: number;
+  email: number;
+};
+export type Ventas = {
+  id: number;
+  fecha: Date;
+  titular: string;
+  completa: boolean;
+  estado: boolean;
+  facturada: boolean;
+  user: User;
+};
+
+export type VentasDetalles = {
+  id: number;
+  cantidad: number;
+  concepto: string;
+  unitario: number;
+  total: number;
+  ventas: Ventas;
+  precio: Precios;
+  user: User;
+};

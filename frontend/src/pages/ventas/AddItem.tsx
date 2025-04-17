@@ -2,8 +2,21 @@ import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { Precios } from "../../types";
 
-export default function AddItem({ item }: { item: Precios }) {
+export default function AddItem({
+  item,
+  addProducto,
+}: {
+  item: Precios;
+  addProducto: (cantidad: number, precio_id: number) => void;
+}) {
   const [cantidad, setCantidad] = useState(1);
+
+  const handlerAdd = () => {
+    if (cantidad > 0) {
+      addProducto(cantidad, item.id);
+      setCantidad(1);
+    }
+  };
   return (
     <div className="flex w-full shadow bg-indigo-200 rounded-xl px-4 py-5 gap-2  items-center justify-between mb-3">
       <div className="w-20">
@@ -38,7 +51,11 @@ export default function AddItem({ item }: { item: Precios }) {
           ${item.precio.toFixed(2)}
         </div>
       </div>
-      <button className="flex items-center justify-center gap-2 bg-slate-200 hover:bg-slate-100 py-2 px-4 rounded-2xl cursor-pointer">
+      <button
+        className="flex items-center justify-center gap-2 bg-slate-200 hover:bg-slate-100 py-2 px-4 rounded-2xl cursor-pointer"
+        disabled={cantidad < 1}
+        onClick={handlerAdd}
+      >
         <Plus size={18} className="cursor-pointer" /> Agregar
       </button>
     </div>

@@ -15,5 +15,6 @@ import { CategoriasModule } from 'src/categorias/categorias.module';
   ],
   controllers: [PreciosController],
   providers: [PreciosService],
+  exports: [PreciosService],
 })
 export class PreciosModule {}

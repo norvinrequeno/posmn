@@ -5,7 +5,11 @@ import Spinner from "../../components/Spinner";
 import api from "../../api";
 import { Categorias, Precios } from "../../types";
 //cSpell:ignore categorias categoria
-export default function ProductosList() {
+export default function ProductosList({
+  addProducto,
+}: {
+  addProducto: (cantidad: number, precio_id: number) => void;
+}) {
   const [showCat, setShowCat] = useState(false);
   const [selectedCats, setSelectedCats] = useState<number[]>([]);
   const [search, setSearch] = useState("");
@@ -60,7 +64,7 @@ export default function ProductosList() {
             className="px-3 py-2 bg-slate-200 rounded-lg flex gap-1 items-center hover:bg-slate-300"
             onClick={() => setShowCat(!showCat)}
           >
-            Categorías{" "}
+            Categorías
             {showCat ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
           </button>
           {showCat && (
@@ -114,7 +118,9 @@ export default function ProductosList() {
       </div>
       <div className="w-full">
         {productosFilter.length > 0 &&
-          productosFilter.map((p) => <AddItem item={p} key={p.id} />)}
+          productosFilter.map((p) => (
+            <AddItem item={p} key={p.id} addProducto={addProducto} />
+          ))}
       </div>
     </div>
   );

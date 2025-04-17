@@ -1,14 +1,13 @@
 import { Trash2 } from "lucide-react";
+import { VentasDetalles } from "../../types";
 
-interface ItemProp {
-  item: {
-    cantidad: number;
-    ventas_id: number;
-    producto: string;
-    precio: number;
-  };
-}
-export default function CarItem({ item }: ItemProp) {
+export default function CarItem({
+  item,
+  removeProducto,
+}: {
+  item: VentasDetalles;
+  removeProducto: (id: number) => void;
+}) {
   return (
     <div className="flex w-full shadow bg-slate-200 rounded-xl px-4 py-4 gap-3  items-center justify-center mb-3">
       <div className="w-1/6">
@@ -17,13 +16,15 @@ export default function CarItem({ item }: ItemProp) {
         </div>
       </div>
       <div className="w-4/6 flex justify-between">
-        <div>{item.producto}</div>
+        <div>{item.precio.producto.producto}</div>
         <div className="flex justify-center items-center text-sm">
-          ${item.precio.toFixed(2)}
+          ${item.precio.precio.toFixed(2)}
         </div>
       </div>
       <div className="w-1/6 flex items-center justify-center">
-        <Trash2 size={18} className="cursor-pointer" />
+        <button type="button" onClick={() => removeProducto(item.id)}>
+          <Trash2 size={18} className="cursor-pointer" />
+        </button>
       </div>
     </div>
   );

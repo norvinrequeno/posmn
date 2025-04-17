@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import ProductosPage from "./pages/productos/ProductosPage";
 import VentasPage from "./pages/ventas/VentasPage";
+import VentasList from "./pages/ventas/VentasList";
 //cSpell:ignore categorias
 export const routesApp: RoutesItem[] = [
   {
@@ -44,9 +45,17 @@ export const routesApp: RoutesItem[] = [
     menu: true,
   },
   {
+    label: "Ventas detalle",
+    path: "/ventas/:id",
+    element: <VentasPage />,
+    icon: <ShoppingCart size={20} />,
+    guard: true,
+    menu: false,
+  },
+  {
     label: "Ventas",
     path: "/ventas",
-    element: <VentasPage />,
+    element: <VentasList />,
     icon: <ShoppingCart size={20} />,
     guard: true,
     menu: true,
