@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Pago } from 'src/pagos/entities/pago.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('formas_pagos')
 export class FormasPago {
@@ -10,4 +11,7 @@ export class FormasPago {
 
   @Column({ default: true })
   estado: boolean;
+
+  @OneToMany(() => Pago, (p) => p.forma)
+  pagos: Pago[];
 }

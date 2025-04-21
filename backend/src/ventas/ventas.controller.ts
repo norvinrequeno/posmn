@@ -16,6 +16,7 @@ import { UpdateVentaDto } from './dto/update-venta.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { UserId } from 'src/auth/user.decorator';
 import { VentasDetallesService } from 'src/ventas_detalles/ventas_detalles.service';
+import { FormasPagosService } from 'src/formas_pagos/formas_pagos.service';
 
 @UseGuards(AuthGuard)
 @Controller('ventas')
@@ -24,6 +25,7 @@ export class VentasController {
     private readonly ventasService: VentasService,
     @Inject(forwardRef(() => VentasDetallesService))
     private readonly detalleService: VentasDetallesService,
+    private readonly formasPagosService: FormasPagosService,
   ) {}
 
   @Post()
@@ -50,7 +52,9 @@ export class VentasController {
     const venta = await this.ventasService.findOne(+id);
     if (!venta) return [];
     const detalle = await this.detalleService.findByVenta(venta.id);
-    return { venta, detalle };
+
+    const formas = await this.formasPagosService.findActive();
+    return { venta, detalle, formas };
   }
 
   @Patch(':id')

@@ -6,6 +6,7 @@ import { Venta } from './entities/venta.entity';
 import { UsersModule } from 'src/users/users.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { VentasDetallesModule } from 'src/ventas_detalles/ventas_detalles.module';
+import { FormasPagosModule } from 'src/formas_pagos/formas_pagos.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { VentasDetallesModule } from 'src/ventas_detalles/ventas_detalles.module
     UsersModule,
     AuthModule,
     forwardRef(() => VentasDetallesModule),
+    FormasPagosModule,
   ],
   controllers: [VentasController],
   providers: [VentasService],

@@ -5,11 +5,7 @@ import Spinner from "../../components/Spinner";
 import api from "../../api";
 import { Categorias, Precios } from "../../types";
 //cSpell:ignore categorias categoria
-export default function ProductosList({
-  addProducto,
-}: {
-  addProducto: (cantidad: number, precio_id: number) => void;
-}) {
+export default function ProductosList() {
   const [showCat, setShowCat] = useState(false);
   const [selectedCats, setSelectedCats] = useState<number[]>([]);
   const [search, setSearch] = useState("");
@@ -118,9 +114,7 @@ export default function ProductosList({
       </div>
       <div className="w-full">
         {productosFilter.length > 0 &&
-          productosFilter.map((p) => (
-            <AddItem item={p} key={p.id} addProducto={addProducto} />
-          ))}
+          productosFilter.map((p) => <AddItem item={p} key={p.id} />)}
       </div>
     </div>
   );

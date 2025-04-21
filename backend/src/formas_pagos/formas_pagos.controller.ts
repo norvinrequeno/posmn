@@ -40,6 +40,10 @@ export class FormasPagosController {
   ) {
     return this.formasPagosService.update(+id, updateFormasPagoDto);
   }
+  @Patch('estado/:id')
+  estado(@Param('id') id: string) {
+    return this.formasPagosService.changeEstado(+id);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

@@ -40,6 +40,15 @@ export class FormasPagosService {
     return this.formasPagoRespository.save(forma);
   }
 
+  async changeEstado(id: number): Promise<FormasPago | undefined> {
+    const forma = await this.findOne(id);
+    if (!forma) {
+      throw new Error('No se encontró el registro');
+    }
+    forma.estado = !forma.estado;
+    return this.formasPagoRespository.save(forma);
+  }
+
   async remove(id: number): Promise<void> {
     const forma = await this.findOne(id);
     if (!forma)

@@ -9,6 +9,7 @@ import { ProductosModule } from './productos/productos.module';
 import { PreciosModule } from './precios/precios.module';
 import { VentasModule } from './ventas/ventas.module';
 import { VentasDetallesModule } from './ventas_detalles/ventas_detalles.module';
+import { PagosModule } from './pagos/pagos.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { VentasDetallesModule } from './ventas_detalles/ventas_detalles.module';
     PreciosModule,
     VentasModule,
     VentasDetallesModule,
+    PagosModule,
   ],
   controllers: [],
   providers: [],

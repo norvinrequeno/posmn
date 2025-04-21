@@ -2,6 +2,7 @@ import { LinkMenuType, RoutesItem } from "./types";
 import CategoriasPage from "./pages/categorias/CategoriasPage";
 import DashboardPage from "./pages/DashboardPage";
 import {
+  Banknote,
   CalendarHeart,
   LayoutDashboard,
   Package,
@@ -11,6 +12,7 @@ import {
 import ProductosPage from "./pages/productos/ProductosPage";
 import VentasPage from "./pages/ventas/VentasPage";
 import VentasList from "./pages/ventas/VentasList";
+import FormasPagosPage from "./pages/formasPagos/FormasPagosPage";
 //cSpell:ignore categorias
 export const routesApp: RoutesItem[] = [
   {
@@ -33,6 +35,14 @@ export const routesApp: RoutesItem[] = [
     path: "/categorias",
     element: <CategoriasPage />,
     icon: <CalendarHeart size={20} />,
+    guard: true,
+    menu: true,
+  },
+  {
+    label: "Formas de pagos",
+    path: "/formas_pagos",
+    element: <FormasPagosPage />,
+    icon: <Banknote size={20} />,
     guard: true,
     menu: true,
   },

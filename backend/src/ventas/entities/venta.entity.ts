@@ -1,3 +1,4 @@
+import { Pago } from 'src/pagos/entities/pago.entity';
 import { User } from 'src/users/user.entity';
 import { VentasDetalle } from 'src/ventas_detalles/entities/ventas_detalle.entity';
 import {
@@ -33,4 +34,7 @@ export class Venta {
 
   @OneToMany(() => VentasDetalle, (v) => v.ventas)
   detalle_ventas: VentasDetalle[];
+
+  @OneToMany(() => Pago, (p) => p.venta)
+  pagos: Pago[];
 }

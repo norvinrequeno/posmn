@@ -63,3 +63,9 @@ export type VentasDetalles = {
   precio: Precios;
   user: User;
 };
+
+export type FormasPagos = {
+  id: number;
+  forma: string;
+  estado: boolean;
+};

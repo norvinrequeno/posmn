@@ -1,16 +1,11 @@
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
 import { Precios } from "../../types";
+import useVenta from "./service/useVenta";
 
-export default function AddItem({
-  item,
-  addProducto,
-}: {
-  item: Precios;
-  addProducto: (cantidad: number, precio_id: number) => void;
-}) {
+export default function AddItem({ item }: { item: Precios }) {
   const [cantidad, setCantidad] = useState(1);
-
+  const { addProducto } = useVenta();
   const handlerAdd = () => {
     if (cantidad > 0) {
       addProducto(cantidad, item.id);
