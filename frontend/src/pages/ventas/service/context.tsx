@@ -1,5 +1,11 @@
 import { createContext } from "react";
-import { AlertType, FormasPagos, Ventas, VentasDetalles } from "../../../types";
+import {
+  AlertType,
+  FormasPagos,
+  Pagos,
+  Ventas,
+  VentasDetalles,
+} from "../../../types";
 
 interface VentasContextType {
   venta: Ventas | null;
@@ -17,6 +23,7 @@ interface VentasContextType {
   setSuccess: (message: string) => void;
   setMessage: React.Dispatch<React.SetStateAction<string>>;
   sumTotal: number;
+  setFacturada: (pagos: Pagos[]) => void;
 }
 
 export const VentaContext = createContext<VentasContextType>({
@@ -34,5 +41,6 @@ export const VentaContext = createContext<VentasContextType>({
   setMessage: () => {},
   setFail: () => {},
   setSuccess: () => {},
+  setFacturada: () => {},
   sumTotal: 0,
 });

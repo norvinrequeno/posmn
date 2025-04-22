@@ -9,6 +9,7 @@ import {
   UseGuards,
   Inject,
   forwardRef,
+  NotFoundException,
 } from '@nestjs/common';
 import { VentasService } from './ventas.service';
 import { CreateVentaDto } from './dto/create-venta.dto';
@@ -17,6 +18,8 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { UserId } from 'src/auth/user.decorator';
 import { VentasDetallesService } from 'src/ventas_detalles/ventas_detalles.service';
 import { FormasPagosService } from 'src/formas_pagos/formas_pagos.service';
+import { CreatePagoDto } from 'src/pagos/dto/create-pago.dto';
+import { PagosService } from 'src/pagos/pagos.service';
 
 @UseGuards(AuthGuard)
 @Controller('ventas')
@@ -26,6 +29,8 @@ export class VentasController {
     @Inject(forwardRef(() => VentasDetallesService))
     private readonly detalleService: VentasDetallesService,
     private readonly formasPagosService: FormasPagosService,
+    @Inject(forwardRef(() => PagosService))
+    private readonly pagos: PagosService,
   ) {}
 
   @Post()
@@ -46,7 +51,15 @@ export class VentasController {
   findComplete() {
     return this.ventasService.findComplete();
   }
+  @Get('ticket/:id')
+  async ticket(@Param('id') id: string) {
+    const venta = await this.ventasService.findOne(+id);
+    if (!venta) return [];
+    const detalle = await this.detalleService.findByVenta(venta.id);
 
+    const pagos = await this.pagos.findByVenta(venta.id);
+    return { venta, detalle, pagos };
+  }
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const venta = await this.ventasService.findOne(+id);
@@ -65,6 +78,24 @@ export class VentasController {
   @Patch('complete/:id')
   complete(@Param('id') id: string) {
     return this.ventasService.completa(+id);
+  }
+
+  @Patch('facturada/:id')
+  async facturada(
+    @Param('id') id: string,
+    @Body() body: { pagos: CreatePagoDto[] },
+  ) {
+    const venta = await this.ventasService.findOne(+id);
+    if (!venta || !venta.estado || venta.facturada)
+      throw new NotFoundException('La venta no esta disponible');
+
+    try {
+      await Promise.all(body.pagos.map((d) => this.pagos.create(d, venta)));
+    } catch (error) {
+      console.error(error);
+      throw new Error('No se pudo registrar los pagos');
+    }
+    return await this.ventasService.facturada(+id);
   }
 
   @Delete(':id')

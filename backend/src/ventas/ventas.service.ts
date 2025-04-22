@@ -72,6 +72,22 @@ export class VentasService {
     venta.completa = true;
     return this.ventasRepository.save(venta);
   }
+
+  async facturada(id: number) {
+    const venta = await this.findOne(id);
+    if (!venta)
+      throw new NotFoundException(
+        'No se encontró el registro que intenta editar',
+      );
+
+    if (!venta.estado) throw new Error('Esta venta ya no esta activa');
+
+    venta.completa = true;
+    venta.facturada = true;
+    venta.estado = false;
+    return this.ventasRepository.save(venta);
+  }
+
   async eliminada(id: number) {
     const venta = await this.findOne(id);
     if (!venta)

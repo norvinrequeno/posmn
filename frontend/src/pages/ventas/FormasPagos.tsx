@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FormasPagos as forma } from "../../types";
 import useVenta from "./service/useVenta";
+import { Check } from "lucide-react";
 
 export default function FormasPagos({
   forma,
@@ -39,7 +40,7 @@ export default function FormasPagos({
           className="absolute top-0 right-0 z-30 bg-amber-200 px-3 py-1 rounded-lg cursor-pointer my-2 mx-1 text-sm"
           onClick={setCompleto}
         >
-          Completo
+          <Check size={18} />
         </button>
       )}
       <label

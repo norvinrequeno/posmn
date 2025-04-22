@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { PagosService } from './pagos.service';
 import { PagosController } from './pagos.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -7,7 +7,11 @@ import { VentasModule } from 'src/ventas/ventas.module';
 import { FormasPagosModule } from 'src/formas_pagos/formas_pagos.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Pago]), VentasModule, FormasPagosModule],
+  imports: [
+    TypeOrmModule.forFeature([Pago]),
+    forwardRef(() => VentasModule),
+    FormasPagosModule,
+  ],
   controllers: [PagosController],
   providers: [PagosService],
   exports: [PagosService],

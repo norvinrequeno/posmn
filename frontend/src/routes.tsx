@@ -13,6 +13,7 @@ import ProductosPage from "./pages/productos/ProductosPage";
 import VentasPage from "./pages/ventas/VentasPage";
 import VentasList from "./pages/ventas/VentasList";
 import FormasPagosPage from "./pages/formasPagos/FormasPagosPage";
+import CompletaPage from "./pages/ventas/CompletaPage";
 //cSpell:ignore categorias
 export const routesApp: RoutesItem[] = [
   {
@@ -58,6 +59,14 @@ export const routesApp: RoutesItem[] = [
     label: "Ventas detalle",
     path: "/ventas/:id",
     element: <VentasPage />,
+    icon: <ShoppingCart size={20} />,
+    guard: true,
+    menu: false,
+  },
+  {
+    label: "Ventas ticket",
+    path: "/ventas/ticket/:id",
+    element: <CompletaPage />,
     icon: <ShoppingCart size={20} />,
     guard: true,
     menu: false,

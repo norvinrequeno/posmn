@@ -5,6 +5,7 @@ import { Pago } from './entities/pago.entity';
 import { Repository } from 'typeorm';
 import { VentasService } from 'src/ventas/ventas.service';
 import { FormasPagosService } from 'src/formas_pagos/formas_pagos.service';
+import { Venta } from 'src/ventas/entities/venta.entity';
 
 @Injectable()
 export class PagosService {
@@ -13,11 +14,7 @@ export class PagosService {
     private readonly ventasService: VentasService,
     private readonly formasPagoService: FormasPagosService,
   ) {}
-  async create(dto: CreatePagoDto): Promise<Pago> {
-    const venta = await this.ventasService.findOne(dto.ventas_id);
-    if (!venta || !venta.estado || venta.facturada)
-      throw new NotFoundException('La venta no esta disponible');
-
+  async create(dto: CreatePagoDto, venta: Venta): Promise<Pago> {
     const forma = await this.formasPagoService.findOne(dto.formas_pagos_id);
     if (!forma || !forma.estado)
       throw new NotFoundException(

@@ -7,6 +7,7 @@ import { UsersModule } from 'src/users/users.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { VentasDetallesModule } from 'src/ventas_detalles/ventas_detalles.module';
 import { FormasPagosModule } from 'src/formas_pagos/formas_pagos.module';
+import { PagosModule } from 'src/pagos/pagos.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { FormasPagosModule } from 'src/formas_pagos/formas_pagos.module';
     AuthModule,
     forwardRef(() => VentasDetallesModule),
     FormasPagosModule,
+    forwardRef(() => PagosModule),
   ],
   controllers: [VentasController],
   providers: [VentasService],

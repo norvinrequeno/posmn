@@ -69,3 +69,12 @@ export type FormasPagos = {
   forma: string;
   estado: boolean;
 };
+export type Pagos = {
+  monto: number;
+  ventas_id: number;
+  formas_pagos_id: number;
+};
+export type PagosVenta = {
+  forma: FormasPagos;
+  monto: number;
+};

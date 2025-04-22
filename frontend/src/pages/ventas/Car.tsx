@@ -3,12 +3,20 @@ import FormasPagos from "./FormasPagos";
 import CarItem from "./CarItem";
 import useVenta from "./service/useVenta";
 import { useState } from "react";
+import { Pagos } from "../../types";
 type formasType = {
   id: number;
   monto: number;
 };
 export default function Car() {
-  const { carList, removeProducto, formasPagos, sumTotal } = useVenta();
+  const {
+    carList,
+    removeProducto,
+    formasPagos,
+    sumTotal,
+    setFacturada,
+    venta,
+  } = useVenta();
   const [formasSelected, setFormasSelected] = useState<formasType[]>([]);
   const setFormas = (id: number, monto: number) => {
     setFormasSelected((prev) => {
@@ -32,7 +40,15 @@ export default function Car() {
   const faltante = sumTotal - selectedSum;
 
   const facturarVenta = () => {
-    alert("Facturar venta");
+    if (!venta?.id) return;
+
+    const pagos: Pagos[] = formasSelected.map((f) => ({
+      formas_pagos_id: f.id,
+      monto: f.monto,
+      ventas_id: venta.id,
+    }));
+
+    setFacturada(pagos);
   };
   return (
     <>

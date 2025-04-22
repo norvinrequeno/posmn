@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { AlertType, FormasPagos, Ventas, VentasDetalles } from "../../../types";
+import {
+  AlertType,
+  FormasPagos,
+  Pagos,
+  Ventas,
+  VentasDetalles,
+} from "../../../types";
 import api from "../../../api";
 import { VentaContext } from "./context";
+import { useNavigate } from "react-router-dom";
 
 export default function VentasProvider({
   children,
@@ -18,6 +25,7 @@ export default function VentasProvider({
   const [error, setError] = useState(false);
   const [carList, setCarList] = useState<VentasDetalles[]>([]);
   const [formasPagos, setFormasPagos] = useState<FormasPagos[]>([]);
+  const nav = useNavigate();
   const getVenta = async () => {
     setLoading(true);
     try {
@@ -90,6 +98,23 @@ export default function VentasProvider({
     setTimeout(() => setMessage(""), 4000);
   };
 
+  const setFacturada = async (pagos: Pagos[]) => {
+    try {
+      const { data, status } = await api.patch(
+        `ventas/facturada/${venta?.id}`,
+        { pagos }
+      );
+      if (status === 200 && data) {
+        nav(`/ventas/ticket/${venta?.id}`);
+      }
+    } catch (error) {
+      console.error(error);
+
+      setSuccess(
+        "Ocurrió un error al guardar los pagos, actualice la pagina e intente de nuevo"
+      );
+    }
+  };
   useEffect(() => {
     getVenta();
   }, [id]);
@@ -140,6 +165,7 @@ export default function VentasProvider({
         setMessage,
         setFail,
         setSuccess,
+        setFacturada,
         sumTotal,
       }}
     >
