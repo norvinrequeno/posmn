@@ -4,6 +4,7 @@ import DashboardPage from "./pages/DashboardPage";
 import {
   Banknote,
   CalendarHeart,
+  ClipboardPlus,
   LayoutDashboard,
   Package,
   Plus,
@@ -14,6 +15,7 @@ import VentasPage from "./pages/ventas/VentasPage";
 import VentasList from "./pages/ventas/VentasList";
 import FormasPagosPage from "./pages/formasPagos/FormasPagosPage";
 import CompletaPage from "./pages/ventas/CompletaPage";
+import ReporteVentas from "./pages/ventas/ReporteVentas";
 //cSpell:ignore categorias
 export const routesApp: RoutesItem[] = [
   {
@@ -76,6 +78,14 @@ export const routesApp: RoutesItem[] = [
     path: "/ventas",
     element: <VentasList />,
     icon: <ShoppingCart size={20} />,
+    guard: true,
+    menu: true,
+  },
+  {
+    label: "Reporte de ventas",
+    path: "/ventas/reporte",
+    element: <ReporteVentas />,
+    icon: <ClipboardPlus size={20} />,
     guard: true,
     menu: true,
   },

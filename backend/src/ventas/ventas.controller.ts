@@ -20,6 +20,7 @@ import { VentasDetallesService } from 'src/ventas_detalles/ventas_detalles.servi
 import { FormasPagosService } from 'src/formas_pagos/formas_pagos.service';
 import { CreatePagoDto } from 'src/pagos/dto/create-pago.dto';
 import { PagosService } from 'src/pagos/pagos.service';
+import { ReportVentaDto } from './dto/report-venta.dto';
 
 @UseGuards(AuthGuard)
 @Controller('ventas')
@@ -33,6 +34,12 @@ export class VentasController {
     private readonly pagos: PagosService,
   ) {}
 
+  @Post('reporte')
+  async report(@Body() dto: ReportVentaDto) {
+    const ventas = await this.ventasService.reporte(dto);
+    const formas = await this.formasPagosService.findActive();
+    return { ventas, formas };
+  }
   @Post()
   create(@Body() dto: CreateVentaDto, @UserId() id: number) {
     return this.ventasService.create(id, dto);

@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Venta } from './entities/venta.entity';
 import { Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
+import { ReportVentaDto } from './dto/report-venta.dto';
 
 @Injectable()
 export class VentasService {
@@ -101,5 +102,27 @@ export class VentasService {
     venta.facturada = false;
     venta.estado = false;
     await this.ventasRepository.save(venta);
+  }
+
+  async reporte(dto: ReportVentaDto): Promise<Venta[]> {
+    const query = this.ventasRepository
+      .createQueryBuilder('ventas')
+      .leftJoinAndSelect('ventas.pagos', 'pagos')
+      .leftJoinAndSelect('pagos.forma', 'formaPago')
+      .where('ventas.facturada = true');
+
+    if (dto.inicio && dto.fin)
+      query.andWhere(
+        'DATE(ventas.fecha) between DATE(:inicio) AND DATE(:fin)',
+        {
+          inicio: dto.inicio,
+          fin: dto.fin,
+        },
+      );
+    else
+      query.andWhere('DATE(ventas.fecha) = DATE(:inicio)', {
+        inicio: dto.inicio,
+      });
+    return await query.getMany();
   }
 }
