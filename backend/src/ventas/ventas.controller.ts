@@ -40,6 +40,11 @@ export class VentasController {
     const formas = await this.formasPagosService.findActive();
     return { ventas, formas };
   }
+  @Post('reporte/productos')
+  async reportProduct(@Body() dto: ReportVentaDto) {
+    const ventas = await this.ventasService.reporteProductos(dto);
+    return { ventas, r: 1 };
+  }
   @Post()
   create(@Body() dto: CreateVentaDto, @UserId() id: number) {
     return this.ventasService.create(id, dto);

@@ -4,7 +4,8 @@ import DashboardPage from "./pages/DashboardPage";
 import {
   Banknote,
   CalendarHeart,
-  ClipboardPlus,
+  ChartColumnBig,
+  ChartColumnIncreasing,
   LayoutDashboard,
   Package,
   Plus,
@@ -16,6 +17,7 @@ import VentasList from "./pages/ventas/VentasList";
 import FormasPagosPage from "./pages/formasPagos/FormasPagosPage";
 import CompletaPage from "./pages/ventas/CompletaPage";
 import ReporteVentas from "./pages/ventas/ReporteVentas";
+import ReporteProductos from "./pages/ventas/ReporteProductos";
 //cSpell:ignore categorias
 export const routesApp: RoutesItem[] = [
   {
@@ -85,7 +87,15 @@ export const routesApp: RoutesItem[] = [
     label: "Reporte de ventas",
     path: "/ventas/reporte",
     element: <ReporteVentas />,
-    icon: <ClipboardPlus size={20} />,
+    icon: <ChartColumnIncreasing size={20} />,
+    guard: true,
+    menu: true,
+  },
+  {
+    label: "Reporte de ventas por productos",
+    path: "/ventas/productos/reporte",
+    element: <ReporteProductos />,
+    icon: <ChartColumnBig size={20} />,
     guard: true,
     menu: true,
   },

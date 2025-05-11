@@ -125,4 +125,42 @@ export class VentasService {
       });
     return await query.getMany();
   }
+
+  async reporteProductos(dto: ReportVentaDto): Promise<
+    {
+      fecha: string;
+      concepto: string;
+      cantidad: number;
+      unitario: number;
+      total: number;
+    }[]
+  > {
+    const query = this.ventasRepository
+      .createQueryBuilder('venta')
+      .select('DATE(venta.fecha)', 'fecha')
+      .addSelect('detalle.concepto', 'concepto')
+      .addSelect('detalle.unitario', 'unitario')
+      .addSelect('SUM(detalle.cantidad)', 'cantidad')
+      .addSelect('SUM(detalle.cantidad) * detalle.unitario', 'total')
+      .innerJoin('venta.detalle_ventas', 'detalle')
+      .where('venta.facturada = true');
+
+    if (dto.inicio && dto.fin) {
+      query.andWhere('DATE(venta.fecha) BETWEEN DATE(:inicio) AND DATE(:fin)', {
+        inicio: dto.inicio,
+        fin: dto.fin,
+      });
+    } else {
+      query.andWhere('DATE(venta.fecha) = DATE(:inicio)', {
+        inicio: dto.inicio,
+      });
+    }
+
+    query.groupBy('DATE(venta.fecha)');
+    query.addGroupBy('detalle.concepto');
+    query.addGroupBy('detalle.unitario');
+    query.orderBy('fecha', 'ASC');
+
+    return await query.getRawMany();
+  }
 }
