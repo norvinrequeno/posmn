@@ -24,6 +24,7 @@ import { PagosModule } from './pagos/pagos.module';
       autoLoadEntities: true,
       synchronize: true, //False en prod
     }),
+
     UsersModule,
     AuthModule,
     CategoriasModule,

@@ -68,10 +68,10 @@ export default function CompletaPage() {
 
   return (
     <Layout title="Resumen de venta">
-      <div className="flex flex-col bg-white w-full max-w-3xl mx-auto min-h-full rounded-2xl p-6 shadow-md">
+      <div className="flex flex-col bg-white w-full max-w-3xl mx-auto min-h-full rounded-2xl p-4 sm:p-6 shadow-md">
         {/* Encabezado de la venta */}
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
             Resumen de Venta
           </h2>
           <p className="text-sm text-gray-600">
@@ -91,7 +91,9 @@ export default function CompletaPage() {
 
         {/* Pagos */}
         <div className="mb-6">
-          <h3 className="text-xl font-semibold text-gray-700 mb-3">Pagos</h3>
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-700 mb-3">
+            Pagos
+          </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {pagos.map((pago, index) => (
               <div
@@ -106,13 +108,13 @@ export default function CompletaPage() {
         </div>
 
         {/* Detalles de productos */}
-        <div>
-          <h3 className="text-xl font-semibold text-gray-700 mb-3">
+        <div className="overflow-x-auto">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-700 mb-3">
             Detalle de Productos
           </h3>
-          <table className="min-w-full table-auto text-left border-t">
+          <table className="min-w-full table-auto text-left border-t text-sm">
             <thead>
-              <tr className="bg-gray-100 text-sm text-gray-700">
+              <tr className="bg-gray-100 text-gray-700">
                 <th className="p-2">Producto</th>
                 <th className="p-2">Cantidad</th>
                 <th className="p-2">Precio</th>
@@ -121,7 +123,7 @@ export default function CompletaPage() {
             </thead>
             <tbody>
               {detalle.map((item, index) => (
-                <tr key={index} className="border-t text-sm text-gray-600">
+                <tr key={index} className="border-t text-gray-600">
                   <td className="p-2">{item.concepto}</td>
                   <td className="p-2">{item.cantidad}</td>
                   <td className="p-2">${item.unitario.toFixed(2)}</td>

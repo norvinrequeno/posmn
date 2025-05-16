@@ -3,11 +3,20 @@ import LoginPage from "./pages/LoginPage";
 import AuthProvider from "./auth/provider";
 import Guard from "./auth/guard";
 import { routesApp } from "./routes";
+import DashboardPage from "./pages/DashboardPage";
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Routes>
+          <Route
+            path="/"
+            element={
+              <Guard>
+                <DashboardPage />
+              </Guard>
+            }
+          />
           <Route path="/login" element={<LoginPage />} />
           {routesApp.map((r) => (
             <Route
