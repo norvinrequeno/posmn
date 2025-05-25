@@ -5,6 +5,7 @@ export type LinkMenuType = {
   click?: () => void;
   name: string;
   icon: JSX.Element;
+  sm: boolean;
 };
 
 export interface RoutesItem {
@@ -14,6 +15,7 @@ export interface RoutesItem {
   icon?: JSX.Element;
   guard: boolean;
   menu: boolean;
+  sm: boolean;
 }
 
 export type AlertType = "success" | "error" | "warning" | "info";

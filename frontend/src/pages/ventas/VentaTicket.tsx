@@ -3,8 +3,6 @@ import { Ventas } from "../../types";
 import { Link } from "react-router-dom";
 
 export default function VentaTicket({ venta }: { venta: Ventas }) {
-  console.log(venta);
-
   const fecha = new Date(venta.fecha).toLocaleDateString("es-SV", {
     day: "2-digit",
     month: "2-digit",
@@ -21,7 +19,7 @@ export default function VentaTicket({ venta }: { venta: Ventas }) {
   });
 
   return (
-    <div className="relative bg-white rounded-xl w-full max-w-xs mx-auto px-5 py-6 font-mono text-sm overflow-hidden h-64">
+    <div className="relative bg-white rounded-xl w-full max-w-xs mx-auto my-2 px-5 py-6 font-mono text-sm overflow-hidden h-64">
       <div className="absolute top-0 left-[-12px] h-full flex items-center">
         <div className="w-6 h-6 rounded-full bg-gray-200 shadow-inner"></div>
       </div>

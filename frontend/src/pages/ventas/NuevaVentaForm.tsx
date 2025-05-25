@@ -4,8 +4,10 @@ import { AlertType } from "../../types";
 import api from "../../api";
 import { useNavigate } from "react-router-dom";
 import { Eraser, Save } from "lucide-react";
+import useAuth from "../../auth/useAuth";
 
 export default function NuevaVentaForm() {
+  const { changeVentaModal } = useAuth();
   const [name, setName] = useState("Mesa ");
   const [message, setMessage] = useState("");
   const [typeAlert, setTypeAlert] = useState<AlertType>("info");
@@ -15,6 +17,7 @@ export default function NuevaVentaForm() {
     try {
       const { data, status } = await api.post("ventas", { titular: name });
       if (status === 201) {
+        changeVentaModal();
         nav(`/ventas/${data.id}`);
       } else {
         setTypeAlert("error");

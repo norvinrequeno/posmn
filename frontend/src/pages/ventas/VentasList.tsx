@@ -27,7 +27,7 @@ export default function VentasList() {
   if (loading) return <Spinner />;
   return (
     <Layout title="Listado de ventas">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6  rounded-2xl min-h-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-1 p-4 lg:gap-6 lg:p-6 rounded-2xl min-h-full">
         {list && list.map((v) => <VentaTicket venta={v} key={v.id} />)}
       </div>
     </Layout>

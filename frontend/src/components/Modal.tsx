@@ -43,7 +43,7 @@ export default function Modal({
             animate={{ opacity: 0.65 }}
             exit={{ opacity: 0 }}
           />
-          <div className="fixed inset-0 z-50 flex  items-end md:items-center justify-center ">
+          <div className="fixed inset-0 z-50 flex  items-center justify-center ">
             <motion.div
               initial={{ y: "100%" }}
               animate={{ y: 0 }}

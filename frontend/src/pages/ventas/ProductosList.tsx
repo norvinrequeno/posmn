@@ -54,8 +54,8 @@ export default function ProductosList() {
   if (loading) return <Spinner />;
   return (
     <div className="flex flex-col">
-      <div className="w-full flex gap-3 mb-5">
-        <div className="relative inline-block">
+      <div className="w-full flex flex-wrap gap-3 mb-5">
+        <div className="relative">
           <button
             className="px-3 py-2 bg-slate-200 rounded-lg flex gap-1 items-center hover:bg-slate-300"
             onClick={() => setShowCat(!showCat)}
@@ -85,7 +85,6 @@ export default function ProductosList() {
             </div>
           )}
         </div>
-
         {categorias.length > 0 &&
           categorias
             .filter((c) => selectedCats.includes(c.id))

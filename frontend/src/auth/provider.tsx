@@ -11,6 +11,7 @@ export default function AuthProvider({
   const [name, setName] = useState("");
   const [menu, setMenu] = useState(false);
   const [token, setToken] = useState("");
+  const [ventaModal, setVentaModal] = useState(false);
   const navigate = useNavigate();
 
   const getUser = () => {
@@ -63,9 +64,21 @@ export default function AuthProvider({
   const changeMenu = () => {
     setMenu(!menu);
   };
+  const changeVentaModal = () => {
+    setVentaModal(!ventaModal);
+  };
   return (
     <AuthContext.Provider
-      value={{ name, token, login, logout, menu, changeMenu }}
+      value={{
+        name,
+        token,
+        login,
+        logout,
+        menu,
+        changeMenu,
+        ventaModal,
+        changeVentaModal,
+      }}
     >
       {children}
     </AuthContext.Provider>

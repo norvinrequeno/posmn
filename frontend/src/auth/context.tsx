@@ -7,6 +7,8 @@ interface AuthContexType {
   logout: () => void;
   changeMenu: () => void;
   menu: boolean;
+  ventaModal: boolean;
+  changeVentaModal: () => void;
 }
 
 export const AuthContext = createContext<AuthContexType>({
@@ -19,4 +21,6 @@ export const AuthContext = createContext<AuthContexType>({
   logout: () => {},
   changeMenu: () => {},
   menu: false,
+  ventaModal: false,
+  changeVentaModal: () => {},
 });
