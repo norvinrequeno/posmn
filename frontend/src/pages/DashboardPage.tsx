@@ -10,13 +10,14 @@ export default function DashboardPage() {
     <Layout title="Dashboard">
       <div className="grid gap-3 grid-cols-1 lg:grid-cols-3">
         {links.map((link: LinkMenuType, index) => {
-          if (link.to && link.sm) {
+          if (link.to) {
             return (
               <LinkCard
                 icon={link.icon}
                 title={link.name}
                 to={link.to}
                 key={link.name || index}
+                sm={link.sm}
               />
             );
           }

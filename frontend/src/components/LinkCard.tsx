@@ -8,7 +8,7 @@ export default function LinkCard({
   icon,
   title,
   to,
-  sm,
+  sm = true,
 }: {
   bgCard?: string;
   textColor?: string;
