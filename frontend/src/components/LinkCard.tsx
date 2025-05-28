@@ -8,6 +8,7 @@ export default function LinkCard({
   icon,
   title,
   to,
+  sm,
 }: {
   bgCard?: string;
   textColor?: string;
@@ -15,11 +16,14 @@ export default function LinkCard({
   icon: JSX.Element;
   title: string;
   to: string;
+  sm: boolean;
 }) {
   return (
     <Link
       to={to}
-      className={`w-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4 min-h-32 mx-auto items-center justify-center rounded-2xl shadow p-6 flex flex-col hover:shadow-md transition-all ${bgCard}`}
+      className={`w-full ${
+        sm ? "sm:basis-1/2" : "hidden"
+      } md:basis-1/3 lg:basis-1/4 min-h-32 mx-auto items-center justify-center rounded-2xl shadow p-6 flex flex-col hover:shadow-md transition-all ${bgCard}`}
     >
       <div>
         <div className={`flex items-center space-x-3 text-3xl ${iconColor}`}>
