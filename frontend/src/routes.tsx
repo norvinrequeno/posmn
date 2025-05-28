@@ -100,14 +100,12 @@ export const routesApp: RoutesItem[] = [
     path: "/ventas/reporte",
     element: <ReporteVentas />,
     icon: <ChartColumnIncreasing size={20} />,
-    sm: true,
   }),
   createRoute({
     label: "Reporte de productos",
     path: "/ventas/productos/reporte",
     element: <ReporteProductos />,
     icon: <ChartColumnBig size={20} />,
-    sm: true,
   }),
 ];
 
