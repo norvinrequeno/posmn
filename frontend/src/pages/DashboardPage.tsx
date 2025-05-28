@@ -10,7 +10,7 @@ export default function DashboardPage() {
     <Layout title="Dashboard">
       <div className="grid gap-3 grid-cols-1 lg:grid-cols-3">
         {links.map((link: LinkMenuType, index) => {
-          if (link.to) {
+          if (link.to && link.sm) {
             return (
               <LinkCard
                 icon={link.icon}
